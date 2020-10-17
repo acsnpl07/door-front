@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { LogService } from "src/app/services/log.service";
 
 @Component({
   selector: "app-home",
@@ -6,5 +7,11 @@ import { Component } from "@angular/core";
   styleUrls: ["home.page.scss"],
 })
 export class HomePage {
-  constructor() {}
+  logs: any[];
+  constructor(private _LogService: LogService) {
+    this._LogService.getLog().subscribe((logs) => {
+      this.logs = logs;
+    });
+  }
+  ngOnInit() {}
 }

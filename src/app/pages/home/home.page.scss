@@ -1,9 +1,46 @@
+.door-status {
+  margin-bottom: 30px;
+  ion-card {
+    display: flex;
+    justify-content: center;
+    background-color: #ebedf0;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px inset,
+      rgba(0, 0, 0, 0.14) 0px 2px 2px 0px inset,
+      rgba(0, 0, 0, 0.12) 0px 1px 5px 0px inset;
+    p {
+      margin: 0;
+      font-weight: 600;
+      font-size: 20px;
+      color: #6b7994;
+    }
+  }
+}
+ion-toggle {
+  --background: #f5f6f8;
+  --background-checked: #f5f6f8;
+  --handle-background: #de3577;
+  --handle-background-checked: #f5f6f8;
+  width: 80px;
+  height: 30px;
+  --handle-height: 30px;
+  --handle-width: 30px;
+}
+
 #home {
   .logs {
+    .window-title {
+      font-weight: 700;
+
+      width: 85%;
+      margin: auto;
+      margin-bottom: 20px;
+      font-size: 26px;
+      color: #6b7994;
+    }
     background-color: #f5f6f8;
     height: 100%;
     width: 100%;
-    padding-top: 50px;
+    padding-top: 100px;
     .log {
       ion-card {
         box-shadow: #cdcfd2 25px 25px 47px -7px;
@@ -22,7 +59,7 @@
           color: #de3577;
           font-weight: 600;
           font-size: 14px;
-          margin-bottom: 10px;
+          margin-bottom: 2px;
         }
         span {
           color: #6b7994;

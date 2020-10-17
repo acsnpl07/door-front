@@ -13,9 +13,11 @@ const routes: Routes = [
           import("../pages/home/home.module").then((m) => m.HomePageModule),
       },
       {
-        path: "tab3",
+        path: "profile",
         loadChildren: () =>
-          import("../tab3/tab3.module").then((m) => m.Tab3PageModule),
+          import("../pages/profile/profile.module").then(
+            (m) => m.ProfilePageModule
+          ),
       },
       {
         path: "",

@@ -19,7 +19,7 @@ export class JwtInterceptor implements HttpInterceptor {
       let token = this._CookieService.get("Token");
       request = request.clone({
         setHeaders: {
-          "x-login-token": token,
+          Authorization: `Bearer ${token}`,
         },
       });
     }

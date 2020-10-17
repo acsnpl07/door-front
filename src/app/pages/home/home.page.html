@@ -1,23 +1,45 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title> Logs </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true" id="home">
   <div class="logs">
-    <div class="log">
+    <div class="door-status">
       <ion-card>
         <ion-card-header>
-          <ion-card-title>Rebecca de Roxas</ion-card-title>
-          <ion-card-subtitle>Action: <span>Accepted</span></ion-card-subtitle>
+          <ion-card-title class="d-flex flex-row">
+            <div class="d-flex align-items-center">
+              <p style="color: #de3577">Opened</p>
+            </div>
+            <ion-toggle></ion-toggle>
+            <div class="d-flex align-items-center">
+              <p style="color: #6b7994">Closed</p>
+            </div>
+          </ion-card-title>
+        </ion-card-header>
+      </ion-card>
+    </div>
+    <h2 class="window-title">Door Log</h2>
+    <div class="log" *ngFor="let log of logs">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title
+            >{{(log.name?log.name:"unknown") | titlecase }}
+          </ion-card-title>
+          <ion-card-subtitle
+            >Action:
+            <span
+              >{{log.entered==1? 'Accepted':'Rejected'}}</span
+            ></ion-card-subtitle
+          >
         </ion-card-header>
 
         <ion-card-content>
-          <p class="date">13 Oct 2020</p>
+          <p class="date">
+            {{log.created_at ? (log.created_at | date:'medium' ) : 'Date
+            unknown'}}
+          </p>
         </ion-card-content>
         <div class="control-type">
-          <p>By <span>Camera</span></p>
+          <p>
+            By <span>{{log.is_camera == 1 ? 'Camera': 'Application'}}</span>
+          </p>
         </div>
       </ion-card>
     </div>

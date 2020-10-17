@@ -1,0 +1,42 @@
+<ion-content padding>
+  <div id="login-form">
+    <h2 class="window-title">Update Profile</h2>
+    <div class="d-flex justify-content-center align-items-center icon">
+      <div class="text-center" (click)="getImages()">
+        <img
+          [src]="userForm.profile_photo_url!= null ? userForm.profile_photo_url : '../../assets/images/default.png'"
+        />
+      </div>
+    </div>
+    <form #form="ngForm" (ngSubmit)="save(form)" method="post">
+      <ion-item>
+        <ion-label position="stacked">Name</ion-label>
+        <ion-input
+          [(ngModel)]="userForm.name"
+          type="text"
+          name="name"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Email</ion-label>
+        <ion-input
+          [(ngModel)]="userForm.email"
+          type="email"
+          name="email"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input
+          [(ngModel)]="userForm.password"
+          type="password"
+          name="password"
+        ></ion-input>
+      </ion-item>
+
+      <ion-buttons><ion-button type="submit">Save</ion-button></ion-buttons>
+    </form>
+    <div class="form-container"></div>
+  </div>
+</ion-content>

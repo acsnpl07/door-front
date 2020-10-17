@@ -1,1 +1,19 @@
+.app-title {
+  font-weight: 900;
+  font-size: 20px;
+  color: #6b7994;
+}
 
+.new-background-color {
+  --background: #dee3eb;
+}
+
+.profile-img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  img {
+    border-radius: 50%;
+    width: 100%;
+  }
+}

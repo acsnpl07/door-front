@@ -1,0 +1,56 @@
+ion-item {
+  --background: transparent;
+}
+.window-title {
+  font-weight: 700;
+  margin: 0 0px 20px 30px;
+  font-size: 22px;
+  color: #6b7994;
+}
+#login-form {
+  height: 100vh;
+  background-color: #f5f6f8;
+  padding-top: 90px;
+  form {
+    width: 100%;
+  }
+  .icon {
+    padding: 20px 0 20px;
+    img {
+      height: 80px;
+      width: 80px;
+      border-radius: 50%;
+    }
+  }
+  .form-container {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+
+  ion-item {
+    width: 90%;
+    margin: auto;
+    background-color: transparent;
+    border-radius: 10px;
+    margin-bottom: 10px;
+
+    ion-label {
+      color: #de3577;
+    }
+  }
+  ion-buttons {
+    width: 80%;
+    margin: auto;
+  }
+  ion-button {
+    border: 1px solid #ebedf0;
+    width: 100%;
+    margin: auto;
+    margin-top: 20px;
+    border-radius: 20px;
+    background-color: #ebedf0;
+    color: #de3577;
+    font-weight: 700;
+  }
+}

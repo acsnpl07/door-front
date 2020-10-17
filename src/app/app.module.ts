@@ -10,6 +10,8 @@ import { CookieService } from "ngx-cookie-service";
 import { JwtInterceptor } from "./_helpers/jwt.interceptor";
 import { ErrorInterceptor } from "./_helpers/error.interceptor";
 import { FormsModule } from "@angular/forms";
+import { ImagePicker } from "@ionic-native/image-picker/ngx";
+
 import { ReactiveFormsModule } from "@angular/forms";
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -33,6 +35,7 @@ import { LoginComponent } from "./pages/login/login.component";
     AuthGuard,
     StatusBar,
     SplashScreen,
+    ImagePicker,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,
