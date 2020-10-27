@@ -3,6 +3,7 @@ import { NgForm } from "@angular/forms";
 import { LoginService } from "../../services/login.service";
 import { CookieService } from "ngx-cookie-service";
 import { Router } from "@angular/router";
+declare var $: any;
 
 @Component({
   selector: "app-login",
@@ -10,6 +11,7 @@ import { Router } from "@angular/router";
   styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit {
+  err = "Couldn't login, check your email and password.";
   constructor(
     private router: Router,
     private _LoginService: LoginService,
@@ -22,7 +24,9 @@ export class LoginComponent implements OnInit {
       .loginUser(form.value.email, form.value.password)
       .subscribe(
         (response: any) => {},
-        (error: any) => {}
+        (error: any) => {
+          $(".toast").toast("show");
+        }
       );
   }
 }
