@@ -2,16 +2,24 @@
   <ion-toolbar class="new-background-color">
     <ion-grid ion-no-padding>
       <ion-row ion-no-padding>
-        <ion-col size="4" ion-no-padding class="text-left">
-          <div class="profile-img" (click)="router.navigate(['/profile'])">
+        <ion-col size="3" ion-no-padding class="text-left">
+          <div
+            class="profile-img"
+            (click)="router.navigate(['/profile'])"
+            style="cursor: pointer"
+          >
             <img
               [src]="user.profile_photo_url!= null ? user.profile_photo_url : '../../assets/images/default.png'"
             />
           </div>
         </ion-col>
-        <ion-col size="6" class="p-0 d-flex align-items-center">
-          <ion-title class="app-title p-0"> Smart Door </ion-title>
+        <ion-col
+          size="6"
+          class="p-0 d-flex align-items-center justify-content-center"
+        >
+          <ion-title class="app-title p-0 text-center"> Smart Door </ion-title>
         </ion-col>
+        <ion-col size="3"></ion-col>
       </ion-row>
     </ion-grid>
   </ion-toolbar>

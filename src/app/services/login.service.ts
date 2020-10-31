@@ -49,6 +49,7 @@ export class LoginService {
   }
   public logout() {
     this._CookieService.delete("Token");
+    this.router.navigate(["/login"]);
   }
   public upload(file, user): Promise<any> {
     return new Promise((resolve, reject) => {

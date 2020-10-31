@@ -41,6 +41,9 @@ export class ProfilePage {
       });
     }
   }
+  logout() {
+    this._LoginService.logout();
+  }
   getImages() {
     this.options = {
       maximumImagesCount: 1,
