@@ -13,14 +13,31 @@ import * as S3 from "aws-sdk/clients/s3";
 })
 export class LoginService {
   redirectUrl = "/";
-  private userSource = new BehaviorSubject("");
-  currentUser = this.userSource.asObservable();
+  private userSource: BehaviorSubject<any>;
+  public currentUser: Observable<any>;
+
+  public get currentUserObject(): any {
+    if (this.userSource) return this.userSource.value;
+    else return null;
+  }
 
   constructor(
     private _HttpClient: HttpClient,
     private _CookieService: CookieService,
     private router: Router
-  ) {}
+  ) {
+    if (localStorage.getItem("currentUser") != "undefined") {
+      this.userSource = new BehaviorSubject<any>(
+        JSON.parse(localStorage.getItem("currentUser"))
+      );
+      this.currentUser = this.userSource.asObservable();
+    }
+
+    if (!this._CookieService.check("Token")) {
+      localStorage.removeItem("currentUser");
+      this.userSource.next(null);
+    }
+  }
   changeUser(user: any) {
     this.userSource.next(user);
   }
@@ -37,26 +54,55 @@ export class LoginService {
       .pipe(
         map((response) => {
           if (response) {
-            this.changeUser(response["user"]);
             this._CookieService.set("Token", response["token"]);
+            localStorage.setItem(
+              "currentUser",
+              JSON.stringify(response["user"])
+            );
+
+            this.userSource.next(response["user"]);
             this.router.navigate([this.redirectUrl]);
           }
         })
       );
   }
+  public updateUser(user: any): Observable<any> {
+    if (!user.image_url) {
+      delete user.image_url;
+    }
+    return this._HttpClient.put(
+      `${environment.api}/api/user/me`,
+      {
+        ...user,
+      },
+      { responseType: "json" }
+    );
+  }
+  public addUser(user: any): Observable<any> {
+    return this._HttpClient.post(
+      `${environment.api}/api/user/store`,
+      {
+        ...user,
+        is_admin: 0,
+      },
+      { responseType: "json" }
+    );
+  }
   public getUser(): Observable<any> {
     return this._HttpClient.get(`${environment.api}/api/user/me`);
   }
   public logout() {
+    localStorage.removeItem("currentUser");
+    if (this.userSource) this.userSource.next(null);
     this._CookieService.delete("Token");
     this.router.navigate(["/login"]);
   }
-  public upload(file, user): Promise<any> {
+  public upload(file): Promise<any> {
     return new Promise((resolve, reject) => {
       const bucket = new S3({
-        accessKeyId: "AKIAJNNIIRTJ7CBDYKVA",
-        secretAccessKey: "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",
-        region: "eu-west-2",
+        accessKeyId: environment.accessKeyId,
+        secretAccessKey: environment.secretAccessKey,
+        region: environment.region,
       });
 
       let buf = Buffer.from(file, "base64");

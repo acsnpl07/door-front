@@ -3,7 +3,7 @@ import { NgForm } from "@angular/forms";
 import { LoginService } from "../../services/login.service";
 import { CookieService } from "ngx-cookie-service";
 import { Router } from "@angular/router";
-declare var $: any;
+import { AlertController } from "@ionic/angular";
 
 @Component({
   selector: "app-login",
@@ -11,21 +11,33 @@ declare var $: any;
   styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit {
-  err = "Couldn't login, check your email and password.";
   constructor(
     private router: Router,
     private _LoginService: LoginService,
-    private _CookieService: CookieService
+    private _CookieService: CookieService,
+    private alertController: AlertController
   ) {}
 
   ngOnInit() {}
+  async presentAlert(msg, title) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: msg,
+      buttons: ["OK"],
+    });
+
+    await alert.present();
+  }
   login(form: NgForm) {
     this._LoginService
       .loginUser(form.value.email, form.value.password)
       .subscribe(
         (response: any) => {},
         (error: any) => {
-          $(".toast").toast("show");
+          this.presentAlert(
+            "Login Failed",
+            "Couldn't login, check your email and password."
+          );
         }
       );
   }

@@ -22,15 +22,26 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> | boolean {
     let url: string = state.url;
-    return this.checkLogin(url);
+    const currentUser = this._LoginService.currentUserObject;
+    return this.checkLogin(currentUser, url, route);
   }
-  checkLogin(url: string): boolean {
+  checkLogin(
+    currentUser: any,
+    url: string = "/",
+    route: ActivatedRouteSnapshot
+  ): boolean {
     if (this._CookieService.check("Token")) {
+      if (currentUser?.is_admin !== 1 && route.data.roles === "admin") {
+        this.router.navigate(["/"]);
+        return false;
+      }
+
+      // Store the attempted URL for redirecting
+      this._LoginService.redirectUrl = url;
+
+      // authorised so return true
       return true;
     }
-
-    // Store the attempted URL for redirecting
-    this._LoginService.redirectUrl = url;
 
     // Navigate to the login page with extras
     this.router.navigate(["/login"]);

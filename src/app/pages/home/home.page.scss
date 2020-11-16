@@ -38,10 +38,14 @@ ion-toggle {
       color: #6b7994;
     }
     background-color: #f5f6f8;
-    height: 100%;
+
     width: 100%;
-    padding-top: 100px;
+    padding: 100px 0;
     .log {
+      margin: 20px 0;
+      .image {
+        max-height: 50vw;
+      }
       ion-card {
         box-shadow: #cdcfd2 25px 25px 47px -7px;
         border-radius: 15px;

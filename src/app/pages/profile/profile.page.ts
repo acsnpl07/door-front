@@ -2,6 +2,9 @@ import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { LoginService } from "src/app/services/login.service";
 import { ImagePicker } from "@ionic-native/image-picker/ngx";
+import { AlertController } from "@ionic/angular";
+
+declare var $: any;
 
 @Component({
   selector: "app-profile",
@@ -9,37 +12,33 @@ import { ImagePicker } from "@ionic-native/image-picker/ngx";
   styleUrls: ["profile.page.scss"],
 })
 export class ProfilePage {
-  user: any = "";
   userForm = {
     name: "",
-    password: "",
     email: "",
-    profile_photo_url: "",
+    image_url: "",
+    new_password: "",
   };
   imageResponse: any;
   options: any;
   constructor(
     private _LoginService: LoginService,
+    public alertController: AlertController,
     private imagePicker: ImagePicker
   ) {
-    if (this._LoginService.currentUser) {
-      this._LoginService.currentUser.subscribe((user) => {
-        this.user = user;
-        this.userForm.name = this.user.name;
-        this.userForm.password = this.user.password;
-        this.userForm.email = this.user.email;
-        this.userForm.profile_photo_url = this.user.profile_photo_url;
-      });
-    } else {
-      this._LoginService.getUser().subscribe((user) => {
-        this._LoginService.changeUser(user);
-        this.user = user;
-        this.userForm.name = this.user.name;
-        this.userForm.password = this.user.password;
-        this.userForm.email = this.user.email;
-        this.userForm.profile_photo_url = this.user.profile_photo_url;
-      });
-    }
+    this._LoginService.currentUser.subscribe((user) => {
+      if (user) {
+        this.userForm.name = user.name;
+        this.userForm.email = user.email;
+        this.userForm.image_url = user.image_url;
+      } else {
+        this._LoginService.getUser().subscribe((user) => {
+          this._LoginService.changeUser(user);
+          this.userForm.name = user.name;
+          this.userForm.email = user.email;
+          this.userForm.image_url = user.image_url;
+        });
+      }
+    });
   }
   logout() {
     this._LoginService.logout();
@@ -57,22 +56,34 @@ export class ProfilePage {
         for (var i = 0; i < results.length; i++) {
           this.imageResponse.push(results[i]);
         }
-        this._LoginService
-          .upload(this.imageResponse[0], this.user)
-          .then((res) => {
-            this.userForm.profile_photo_url = res;
-          });
-
-        console.log(this.userForm.profile_photo_url);
+        this._LoginService.upload(this.imageResponse[0]).then((res) => {
+          this.userForm.image_url = res;
+        });
       },
       (err) => {
         console.log(err);
       }
     );
   }
+  async presentAlert(msg, title) {
+    const alert = await this.alertController.create({
+      header: title,
+      message: msg,
+      buttons: ["OK"],
+    });
+
+    await alert.present();
+  }
 
   save(form: NgForm) {
-    //update user todo1
+    this._LoginService.updateUser(this.userForm).subscribe(
+      (res) => {
+        this.presentAlert(res.message, "Success");
+      },
+      (err) => {
+        this.presentAlert("Failed. Check your data and try again.", "Failed");
+      }
+    );
   }
   changePhoto() {}
 }

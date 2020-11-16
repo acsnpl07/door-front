@@ -4,17 +4,14 @@
       <ion-card>
         <ion-card-header>
           <ion-card-title class="d-flex flex-row">
-            <div class="d-flex align-items-center">
-              <p style="color: #de3577">Opened</p>
-            </div>
-            <ion-toggle></ion-toggle>
-            <div class="d-flex align-items-center">
-              <p style="color: #6b7994">Closed</p>
-            </div>
+            <ion-button size="large" color="light" (click)="presentLoading()"
+              >Open <ion-icon name="lock-open-outline"></ion-icon
+            ></ion-button>
           </ion-card-title>
         </ion-card-header>
       </ion-card>
     </div>
+
     <h2 class="window-title">Door Log</h2>
     <div class="log" *ngFor="let log of logs">
       <ion-card>
@@ -35,6 +32,13 @@
             {{log.created_at ? (log.created_at | date:'medium' ) : 'Date
             unknown'}}
           </p>
+        </ion-card-content>
+        <ion-card-content>
+          <img
+            class="image w-100"
+            *ngIf="log.image_url"
+            [src]="log.image_url"
+          />
         </ion-card-content>
         <div class="control-type">
           <p>

@@ -32,9 +32,9 @@
       <ion-label>Home</ion-label>
     </ion-tab-button>
 
-    <!-- <ion-tab-button tab="profile">
-      <ion-icon name="square"></ion-icon>
-      <ion-label>Tab 3</ion-label>
-    </ion-tab-button> -->
+    <ion-tab-button tab="dashboard" *ngIf="user.is_admin">
+      <ion-icon name="desktop-outline"></ion-icon>
+      <ion-label>Admin Dashboard</ion-label>
+    </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
