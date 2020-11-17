@@ -9,7 +9,7 @@ import { LoginService } from "../services/login.service";
 })
 export class TabsPage {
   user: any = null;
-  constructor(private router: Router, private _LoginService: LoginService) {
+  constructor(public router: Router, private _LoginService: LoginService) {
     this._LoginService.currentUser.subscribe((user) => {
       this.user = user;
     });
