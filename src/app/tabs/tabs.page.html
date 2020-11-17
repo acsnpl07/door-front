@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" *ngIf="user">
   <ion-toolbar class="new-background-color">
     <ion-grid ion-no-padding>
       <ion-row ion-no-padding>
@@ -9,7 +9,8 @@
             style="cursor: pointer"
           >
             <img
-              [src]="user.profile_photo_url!= null ? user.profile_photo_url : '../../assets/images/default.png'"
+              class="img-fluid"
+              [src]="user?.image_url!= null ? user?.image_url : '../../assets/images/default.png'"
             />
           </div>
         </ion-col>
@@ -44,7 +45,7 @@
       <ion-label>Home</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="dashboard" *ngIf="user.is_admin">
+    <ion-tab-button tab="dashboard" *ngIf="user?.is_admin">
       <ion-icon name="desktop-outline"></ion-icon>
       <ion-label>Admin Dashboard</ion-label>
     </ion-tab-button>

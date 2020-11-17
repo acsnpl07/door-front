@@ -25,19 +25,14 @@ export class ProfilePage {
     public alertController: AlertController,
     private imagePicker: ImagePicker
   ) {
-    this._LoginService.currentUser.subscribe((user) => {
-      if (user) {
-        this.userForm.name = user.name;
-        this.userForm.email = user.email;
-        this.userForm.image_url = user.image_url;
-      } else {
-        this._LoginService.getUser().subscribe((user) => {
-          this._LoginService.changeUser(user);
-          this.userForm.name = user.name;
-          this.userForm.email = user.email;
-          this.userForm.image_url = user.image_url;
-        });
-      }
+    this.getUser();
+  }
+  getUser() {
+    this._LoginService.getUser().subscribe((user) => {
+      this._LoginService.changeUser(user);
+      this.userForm.name = user.name;
+      this.userForm.email = user.email;
+      this.userForm.image_url = user.image_url;
     });
   }
   logout() {
@@ -79,6 +74,7 @@ export class ProfilePage {
     this._LoginService.updateUser(this.userForm).subscribe(
       (res) => {
         this.presentAlert(res.message, "Success");
+        this.getUser();
       },
       (err) => {
         this.presentAlert("Failed. Check your data and try again.", "Failed");

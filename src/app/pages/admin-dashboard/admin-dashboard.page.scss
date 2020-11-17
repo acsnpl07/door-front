@@ -26,6 +26,13 @@ h2 {
   font-size: 26px;
   color: #6b7994;
 }
+table {
+  font-size: 2vw;
+  th,
+  td {
+    padding: 0.35rem;
+  }
+}
 #user-form {
   background-color: #f5f6f8;
   padding: 90px 0;
@@ -98,4 +105,10 @@ h2 {
       color: #de3577;
     }
   }
+}
+.deleteBtn {
+  font-size: 2vw;
+  padding: 5px;
+  background-color: #ebedf0;
+  color: #de3577;
 }

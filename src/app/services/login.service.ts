@@ -89,7 +89,15 @@ export class LoginService {
     );
   }
   public getUser(): Observable<any> {
-    return this._HttpClient.get(`${environment.api}/api/user/me`);
+    return this._HttpClient.get(`${environment.api}/api/user/me`).pipe(
+      map((response) => {
+        if (response) {
+          localStorage.setItem("currentUser", JSON.stringify(response));
+          this.userSource.next(response);
+          return response;
+        }
+      })
+    );
   }
   public getUsers(page: number = null): Observable<any> {
     let pageParameter: string = "";

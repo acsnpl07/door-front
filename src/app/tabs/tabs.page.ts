@@ -8,10 +8,9 @@ import { LoginService } from "../services/login.service";
   styleUrls: ["tabs.page.scss"],
 })
 export class TabsPage {
-  user: any = "";
+  user: any = null;
   constructor(private router: Router, private _LoginService: LoginService) {
-    this._LoginService.getUser().subscribe((user) => {
-      this._LoginService.changeUser(user);
+    this._LoginService.currentUser.subscribe((user) => {
       this.user = user;
     });
   }

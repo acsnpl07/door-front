@@ -79,12 +79,14 @@
   <div class="row m-0" *ngIf="data?.dataRows">
     <div class="col-md-12">
       <div class="card mt-4">
-        <div class="card-header d-flex justify-content-md-between">
-          <h4 class="card-title main-color font-weight-bold m-0">
+        <div
+          class="card-header d-flex justify-content-md-between align-items-center"
+        >
+          <h4 class="card-title main-color font-weight-bold m-0 mr-2">
             {{ data.title }}
           </h4>
           <form>
-            <div class="input-group no-border">
+            <div class="input-group no-border m-0">
               <input
                 type="text"
                 value=""
@@ -132,7 +134,7 @@
                     </td>
                     <td class="text-center" *ngIf="data.buttonName">
                       <button
-                        class="btn btn-danger"
+                        class="btn deleteBtn"
                         id="{{ 'user' + i }}"
                         (click)="removeItem(i)"
                         *ngIf="data.buttonName[0] && !item.is_admin"
