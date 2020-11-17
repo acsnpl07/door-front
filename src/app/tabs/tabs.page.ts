@@ -15,4 +15,7 @@ export class TabsPage {
       this.user = user;
     });
   }
+  logout() {
+    this._LoginService.logout();
+  }
 }

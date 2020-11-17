@@ -17,3 +17,19 @@
     width: 100%;
   }
 }
+.logout {
+  .window-title {
+    font-weight: 700;
+    font-size: 22px;
+    width: 50%;
+    color: #6b7994;
+    margin-top: 10px;
+  }
+  ion-button {
+    border: 1px solid #ebedf0;
+    border-radius: 20px;
+    background-color: #ebedf0;
+    color: #de3577;
+    font-weight: 700;
+  }
+}

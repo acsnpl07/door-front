@@ -9,15 +9,22 @@ import { DoorService } from "src/app/services/door.service";
   styleUrls: ["home.page.scss"],
 })
 export class HomePage {
-  logs: any[];
+  logs: any = null;
   constructor(
     private _LogService: LogService,
     private _DoorService: DoorService,
     public loadingController: LoadingController,
     public alertController: AlertController
   ) {
-    this._LogService.getLog().subscribe((logs) => {
-      this.logs = logs.data;
+    this.getLogs();
+  }
+  handlePageChange(p) {
+    this.getLogs(p);
+  }
+  getLogs(page: number = null) {
+    this.logs = null;
+    this._LogService.getLog(page).subscribe((logs) => {
+      this.logs = logs;
     });
   }
   async presentLoading() {

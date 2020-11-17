@@ -13,39 +13,55 @@
     </div>
 
     <h2 class="window-title">Door Log</h2>
-    <div class="log" *ngFor="let log of logs">
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title
-            >{{(log.name?log.name:"unknown") | titlecase }}
-          </ion-card-title>
-          <ion-card-subtitle
-            >Action:
-            <span
-              >{{log.entered==1? 'Accepted':'Rejected'}}</span
-            ></ion-card-subtitle
-          >
-        </ion-card-header>
+    <div *ngIf="logs">
+      <div
+        class="log"
+        *ngFor="let log of logs.data | paginate
+    : {
+        itemsPerPage: logs.per_page,
+        currentPage: logs.current_page,
+        totalItems: logs.total
+      }"
+      >
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title
+              >{{(log.name?log.name:"unknown") | titlecase }}
+            </ion-card-title>
+            <ion-card-subtitle
+              >Action:
+              <span
+                >{{log.entered==1? 'Accepted':'Rejected'}}</span
+              ></ion-card-subtitle
+            >
+          </ion-card-header>
 
-        <ion-card-content>
-          <p class="date">
-            {{log.created_at ? (log.created_at | date:'medium' ) : 'Date
-            unknown'}}
-          </p>
-        </ion-card-content>
-        <ion-card-content>
-          <img
-            class="image w-100"
-            *ngIf="log.image_url"
-            [src]="log.image_url"
-          />
-        </ion-card-content>
-        <div class="control-type">
-          <p>
-            By <span>{{log.is_camera == 1 ? 'Camera': 'Application'}}</span>
-          </p>
-        </div>
-      </ion-card>
+          <ion-card-content>
+            <p class="date">
+              {{log.created_at ? (log.created_at | date:'medium' ) : 'Date
+              unknown'}}
+            </p>
+          </ion-card-content>
+          <ion-card-content>
+            <img
+              class="image w-100"
+              *ngIf="log.image_url"
+              [src]="log.image_url"
+            />
+          </ion-card-content>
+          <div class="control-type">
+            <p>
+              By <span>{{log.is_camera == 1 ? 'Camera': 'Application'}}</span>
+            </p>
+          </div>
+        </ion-card>
+      </div>
     </div>
+    <pagination-controls
+      (pageChange)="handlePageChange($event)"
+      previousLabel="Prev"
+      nextLabel="Next"
+      autoHide="true"
+    ></pagination-controls>
   </div>
 </ion-content>

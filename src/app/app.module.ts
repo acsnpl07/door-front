@@ -18,6 +18,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { AuthGuard } from "./_guard";
 import { LoginComponent } from "./pages/login/login.component";
+import { NgxPaginationModule } from "ngx-pagination";
 
 @NgModule({
   declarations: [AppComponent, LoginComponent],
@@ -29,6 +30,7 @@ import { LoginComponent } from "./pages/login/login.component";
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxPaginationModule,
   ],
   providers: [
     CookieService,

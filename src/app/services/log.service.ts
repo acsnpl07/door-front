@@ -9,7 +9,12 @@ import { environment } from "src/environments/environment";
 export class LogService {
   constructor(private _HttpClient: HttpClient) {}
 
-  public getLog(): Observable<any> {
-    return this._HttpClient.get(`${environment.api}/api/log`);
+  public getLog(page: number = null): Observable<any> {
+    let pageParameter: string = "";
+    if (page) {
+      pageParameter += "?page=" + page;
+    }
+    return this._HttpClient.get(`${environment.api}/api/log${pageParameter}`);
   }
+  
 }

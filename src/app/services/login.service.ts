@@ -91,6 +91,20 @@ export class LoginService {
   public getUser(): Observable<any> {
     return this._HttpClient.get(`${environment.api}/api/user/me`);
   }
+  public getUsers(page: number = null): Observable<any> {
+    let pageParameter: string = "";
+    if (page) {
+      pageParameter += "?page=" + page;
+    }
+    return this._HttpClient.get(`${environment.api}/api/user${pageParameter}`);
+  }
+  deleteUser(product_id: any): Observable<any> {
+    return this._HttpClient.delete(
+      `${environment.api}/api/user/${product_id}`,
+
+      { responseType: "json" }
+    );
+  }
   public logout() {
     localStorage.removeItem("currentUser");
     if (this.userSource) this.userSource.next(null);

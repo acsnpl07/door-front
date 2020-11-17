@@ -18,18 +18,18 @@ ion-item {
     font-weight: 700;
   }
 }
-
+h2 {
+  font-weight: 700;
+  width: 85%;
+  margin: auto;
+  margin-bottom: 20px;
+  font-size: 26px;
+  color: #6b7994;
+}
 #user-form {
   background-color: #f5f6f8;
   padding: 90px 0;
-  h2 {
-    font-weight: 700;
-    width: 85%;
-    margin: auto;
-    margin-bottom: 20px;
-    font-size: 26px;
-    color: #6b7994;
-  }
+
   .profile-container {
     position: relative;
   }

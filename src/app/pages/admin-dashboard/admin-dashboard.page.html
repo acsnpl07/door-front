@@ -64,7 +64,6 @@
           />
         </div>
       </ion-item>
-
       <ion-buttons
         ><ion-button
           type="submit"
@@ -73,5 +72,97 @@
         ></ion-buttons
       >
     </form>
+  </div>
+  <div class="text-center">
+    <h2 class="text-center mt-5">All Users</h2>
+  </div>
+  <div class="row m-0" *ngIf="data?.dataRows">
+    <div class="col-md-12">
+      <div class="card mt-4">
+        <div class="card-header d-flex justify-content-md-between">
+          <h4 class="card-title main-color font-weight-bold m-0">
+            {{ data.title }}
+          </h4>
+          <form>
+            <div class="input-group no-border">
+              <input
+                type="text"
+                value=""
+                class="form-control"
+                placeholder="Search by {{ data.searchField }}"
+                (input)="onSearchChange($event.target.value)"
+              />
+            </div>
+          </form>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class="text-primary">
+                <th
+                  *ngFor="let header of data.headerRow"
+                  class="text-center secondary-color"
+                >
+                  {{ header }}
+                </th>
+                <th
+                  class="text-center secondary-color"
+                  *ngFor="let buttonName of data.buttonName"
+                >
+                  {{ buttonName }}
+                </th>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="data?.dataRows">
+                  <tr
+                    *ngFor="let item of searchResult.dataRows | paginate
+                  : {
+                      itemsPerPage: data.dataRows.per_page,
+                      currentPage: data.dataRows.current_page,
+                      totalItems: data.dataRows.total
+                  
+                    }; let i = index"
+                  >
+                    <td
+                      *ngFor="let key of searchResult.keys"
+                      class="text-center"
+                    >
+                      {{ key ==="is_admin" ? (item[key] === 0 ? "User" :
+                      "Admin"): item[key] }}
+                    </td>
+                    <td class="text-center" *ngIf="data.buttonName">
+                      <button
+                        class="btn btn-danger"
+                        id="{{ 'user' + i }}"
+                        (click)="removeItem(i)"
+                        *ngIf="data.buttonName[0] && !item.is_admin"
+                      >
+                        {{ data.buttonName[0] }}
+                      </button>
+                    </td>
+                    <td class="text-center" *ngIf="data.buttonName">
+                      <button
+                        class="btn btn-danger"
+                        id="{{ 'user' + i }}"
+                        (click)="removeItem(i)"
+                        *ngIf="data.buttonName[1]"
+                      >
+                        {{ data.buttonName[1] }}
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <pagination-controls
+          (pageChange)="pageChanged($event)"
+          previousLabel="Prev"
+          nextLabel="Next"
+          autoHide="true"
+        ></pagination-controls>
+      </div>
+    </div>
   </div>
 </ion-content>

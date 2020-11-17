@@ -19,7 +19,19 @@
         >
           <ion-title class="app-title p-0 text-center"> Smart Door </ion-title>
         </ion-col>
-        <ion-col size="3"></ion-col>
+        <ion-col
+          size="3"
+          class="p-0 d-flex align-items-center justify-content-end"
+        >
+          <div class="logout d-flex justify-content-between flex-row">
+            <ion-buttons
+              ><ion-button (click)="logout()">
+                <ion-icon
+                  color="white"
+                  name="log-out-outline"
+                ></ion-icon> </ion-button
+            ></ion-buttons></div
+        ></ion-col>
       </ion-row>
     </ion-grid>
   </ion-toolbar>
