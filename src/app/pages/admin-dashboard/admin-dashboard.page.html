@@ -1,10 +1,7 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Admin Dashboard</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" class="mt-5">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div id="user-form">
     <h2 class="text-center">Add new user</h2>
     <form #form="ngForm" (ngSubmit)="save(form)" method="post">

@@ -5,25 +5,29 @@ import {
   HttpEvent,
   HttpInterceptor,
 } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { CookieService } from "ngx-cookie-service";
+import { from, Observable } from "rxjs";
+import { catchError, switchMap } from "rxjs/operators";
+import { NativeStorage } from "@ionic-native/native-storage/ngx";
+
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-  constructor(private _CookieService: CookieService) {}
+  constructor(private nativeStorage: NativeStorage) {}
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     // add authorization header with jwt token if available
-    if (this._CookieService.get("Token")) {
-      let token = this._CookieService.get("Token");
-      request = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    }
 
-    return next.handle(request);
+    return from(this.nativeStorage.getItem("Token")).pipe(
+      switchMap((data) => {
+        request = request.clone({
+          setHeaders: {
+            Authorization: `Bearer ${data}`,
+          },
+        });
+        return next.handle(request);
+      }),
+      catchError((err) => next.handle(request))
+    );
   }
 }

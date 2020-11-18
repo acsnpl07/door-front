@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { LoginService } from "../../services/login.service";
-import { CookieService } from "ngx-cookie-service";
 import { Router } from "@angular/router";
 import { AlertController } from "@ionic/angular";
 
@@ -14,7 +13,6 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private _LoginService: LoginService,
-    private _CookieService: CookieService,
     private alertController: AlertController
   ) {}
 

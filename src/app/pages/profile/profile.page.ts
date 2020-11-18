@@ -41,8 +41,8 @@ export class ProfilePage {
   getImages() {
     this.options = {
       maximumImagesCount: 1,
-      width: 50,
-      quality: 90,
+      width: 35,
+      quality: 100,
       outputType: 1,
     };
     this.imageResponse = [];
@@ -60,7 +60,16 @@ export class ProfilePage {
       }
     );
   }
-  async presentAlert(msg, title) {
+  doRefresh(event) {
+    this._LoginService.getUser().subscribe((user) => {
+      this._LoginService.changeUser(user);
+      this.userForm.name = user.name;
+      this.userForm.email = user.email;
+      this.userForm.image_url = user.image_url;
+      event.target.complete();
+    });
+  }
+  async presentAlert(msg, title: string) {
     const alert = await this.alertController.create({
       header: title,
       message: msg,
@@ -77,7 +86,11 @@ export class ProfilePage {
         this.getUser();
       },
       (err) => {
-        this.presentAlert("Failed. Check your data and try again.", "Failed");
+        console.log(err);
+        this.presentAlert(
+          `${err.error.message} Please fill out [Name,Email,Password]`,
+          "Failed"
+        );
       }
     );
   }

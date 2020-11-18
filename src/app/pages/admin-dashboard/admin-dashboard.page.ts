@@ -47,10 +47,28 @@ export class AdminDashboardPage implements OnInit {
       this.searchResult.dataRows = this.data.dataRows.data;
     });
   }
+  doRefresh(event) {
+    this._LoginService.getUsers().subscribe((res) => {
+      this.data = {
+        headerRow: ["Name", "Email", "Role"],
+        keys: ["name", "email", "is_admin"],
+        dataRows: res,
+        title: "Users",
+        buttonName: ["Delete"],
+        searchField: "email",
+      };
+      this.searchResult = Object.assign({}, this.data);
+      this.searchResult.dataRows = this.data.dataRows.data;
+      event.target.complete();
+    });
+  }
   onSearchChange(text) {
     if (text != "") {
       this.searchResult.dataRows = this.data.dataRows.data.filter((data) =>
-        data[this.data.searchField].toString().includes(text.toString())
+        data[this.data.searchField]
+          .toString()
+          .toLowerCase()
+          .includes(text.toString().toLowerCase())
       );
     } else {
       this.searchResult.dataRows = this.data.dataRows.data;
@@ -71,7 +89,8 @@ export class AdminDashboardPage implements OnInit {
   save(form: NgForm) {
     this._LoginService.addUser(this.user).subscribe(
       (res) => {
-        this.presentAlert(res.message, "Added");
+        console.log(res);
+        this.presentAlert("User Added", "Success");
         this.getUsers();
       },
       (err) => {

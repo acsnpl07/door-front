@@ -1,4 +1,7 @@
-<ion-content [fullscreen]="true" id="home">
+<ion-content id="home">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" class="mt-5">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div class="logs">
     <div class="door-status">
       <ion-card>

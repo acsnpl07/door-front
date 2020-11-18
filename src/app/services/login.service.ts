@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from "rxjs";
-import { CookieService } from "ngx-cookie-service";
 import { map } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { environment } from "../../environments/environment";
 import * as AWS from "aws-sdk/global";
 import * as S3 from "aws-sdk/clients/s3";
+import { NativeStorage } from "@ionic-native/native-storage/ngx";
 
 @Injectable({
   providedIn: "root",
@@ -23,20 +23,26 @@ export class LoginService {
 
   constructor(
     private _HttpClient: HttpClient,
-    private _CookieService: CookieService,
-    private router: Router
+    private router: Router,
+    private nativeStorage: NativeStorage
   ) {
-    if (localStorage.getItem("currentUser") != "undefined") {
-      this.userSource = new BehaviorSubject<any>(
-        JSON.parse(localStorage.getItem("currentUser"))
-      );
-      this.currentUser = this.userSource.asObservable();
-    }
+    this.userSource = new BehaviorSubject<any>({});
+    this.nativeStorage
+      .getItem("currentUser")
+      .then((data) => {
+        this.userSource = new BehaviorSubject<any>(JSON.parse(data));
+        this.currentUser = this.userSource.asObservable();
+      })
+      .catch((err) => {
+        this.currentUser = this.userSource.asObservable();
+      });
 
-    if (!this._CookieService.check("Token")) {
-      localStorage.removeItem("currentUser");
-      this.userSource.next(null);
-    }
+    this.nativeStorage.getItem("Token").then(
+      (data) => {},
+      (err) => {
+        this.userSource.next(null);
+      }
+    );
   }
   changeUser(user: any) {
     this.userSource.next(user);
@@ -46,7 +52,7 @@ export class LoginService {
       .post(
         `${environment.api}/api/login`,
         {
-          email: email,
+          email: email.toLowerCase(),
           password: password,
         },
         { responseType: "json" }
@@ -54,19 +60,29 @@ export class LoginService {
       .pipe(
         map((response) => {
           if (response) {
-            this._CookieService.set("Token", response["token"]);
-            localStorage.setItem(
-              "currentUser",
-              JSON.stringify(response["user"])
-            );
+            this.nativeStorage
+              .setItem("Token", response["token"])
+              .then(
+                (data) => {},
+                (error) => {}
+              )
+              .catch((err) => {});
+            this.nativeStorage
+              .setItem("currentUser", JSON.stringify(response["user"]))
+              .then(
+                (data) => {},
+                (error) => {}
+              );
 
             this.userSource.next(response["user"]);
+
             this.router.navigate([this.redirectUrl]);
           }
         })
       );
   }
   public updateUser(user: any): Observable<any> {
+    user.email = user.email.toLowerCase();
     if (!user.image_url) {
       delete user.image_url;
     }
@@ -79,6 +95,7 @@ export class LoginService {
     );
   }
   public addUser(user: any): Observable<any> {
+    user.email = user.email.toLowerCase();
     return this._HttpClient.post(
       `${environment.api}/api/user/store`,
       {
@@ -92,7 +109,12 @@ export class LoginService {
     return this._HttpClient.get(`${environment.api}/api/user/me`).pipe(
       map((response) => {
         if (response) {
-          localStorage.setItem("currentUser", JSON.stringify(response));
+          this.nativeStorage
+            .setItem("currentUser", JSON.stringify(response))
+            .then(
+              () => {},
+              (error) => {}
+            );
           this.userSource.next(response);
           return response;
         }
@@ -114,9 +136,9 @@ export class LoginService {
     );
   }
   public logout() {
-    localStorage.removeItem("currentUser");
+    this.nativeStorage.remove("currentUser").then((data) => {});
     if (this.userSource) this.userSource.next(null);
-    this._CookieService.delete("Token");
+    this.nativeStorage.remove("Token").then((data) => {});
     this.router.navigate(["/login"]);
   }
   public upload(file): Promise<any> {

@@ -3,7 +3,9 @@ ion-item {
 }
 
 #login-form {
+  min-height: 100vh;
   background-color: #f5f6f8;
+  padding-bottom: 50px;
   form {
     width: 100%;
   }

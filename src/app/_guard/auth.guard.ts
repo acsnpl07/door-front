@@ -7,20 +7,20 @@ import {
 } from "@angular/router";
 import { Observable } from "rxjs";
 import { LoginService } from "../services/login.service";
-import { CookieService } from "ngx-cookie-service";
+import { NativeStorage } from "@ionic-native/native-storage/ngx";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
     protected router: Router,
     protected _LoginService: LoginService,
-    private _CookieService: CookieService
+    protected nativeStorage: NativeStorage
   ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Observable<boolean> | boolean {
+  ): Observable<boolean> | Promise<boolean> {
     let url: string = state.url;
     const currentUser = this._LoginService.currentUserObject;
     return this.checkLogin(currentUser, url, route);
@@ -29,22 +29,22 @@ export class AuthGuard implements CanActivate {
     currentUser: any,
     url: string = "/",
     route: ActivatedRouteSnapshot
-  ): boolean {
-    if (this._CookieService.check("Token")) {
-      if (currentUser?.is_admin !== 1 && route.data.roles === "admin") {
-        this.router.navigate(["/"]);
+  ): Promise<boolean> {
+    return this.nativeStorage.getItem("Token").then(
+      (data) => {
+        if (currentUser?.is_admin !== 1 && route.data.roles === "admin") {
+          this.router.navigate(["/"]);
+          return false;
+        }
+        this._LoginService.redirectUrl = url;
+        // authorised so return true
+        return true;
+      },
+      (err) => {
+        // Navigate to the login page with extras
+        this.router.navigate(["/login"]);
         return false;
       }
-
-      // Store the attempted URL for redirecting
-      this._LoginService.redirectUrl = url;
-
-      // authorised so return true
-      return true;
-    }
-
-    // Navigate to the login page with extras
-    this.router.navigate(["/login"]);
-    return false;
+    );
   }
 }

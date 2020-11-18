@@ -1,4 +1,7 @@
 <ion-content padding>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" class="mt-5">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div
     id="login-form"
     aria-live="polite"

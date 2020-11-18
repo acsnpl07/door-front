@@ -4,6 +4,7 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
+  HttpErrorResponse,
 } from "@angular/common/http";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
@@ -19,7 +20,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
-      catchError((err) => {
+      catchError((err: HttpErrorResponse) => {
         if (err.status === 403) {
           // auto logout if 403 response returned from api
           this._LoginService.logout();

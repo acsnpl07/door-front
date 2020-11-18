@@ -21,8 +21,13 @@ export class HomePage {
   handlePageChange(p) {
     this.getLogs(p);
   }
+  doRefresh(event) {
+    this._LogService.getLog().subscribe((logs) => {
+      this.logs = logs;
+      event.target.complete();
+    });
+  }
   getLogs(page: number = null) {
-    this.logs = null;
     this._LogService.getLog(page).subscribe((logs) => {
       this.logs = logs;
     });
