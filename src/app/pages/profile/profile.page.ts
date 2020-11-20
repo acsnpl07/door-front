@@ -41,7 +41,7 @@ export class ProfilePage {
   getImages() {
     this.options = {
       maximumImagesCount: 1,
-      width: 35,
+      width: 100,
       quality: 100,
       outputType: 1,
     };

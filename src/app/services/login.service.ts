@@ -152,8 +152,8 @@ export class LoginService {
       let buf = Buffer.from(file, "base64");
 
       const params = {
-        Bucket: "zeal-io",
-        Key: Date.now() + "",
+        Bucket: environment.bucket,
+        Key: "images/" + Date.now() + "",
         Body: buf,
         ContentEncoding: "base64",
         ContentType: "image/jpeg",
