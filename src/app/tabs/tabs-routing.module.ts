@@ -33,6 +33,7 @@ const routes: Routes = [
       },
       {
         path: "notifications",
+        data: { roles: "admin" },
         canActivate: [AuthGuard],
         loadChildren: () =>
           import("../pages/notifications/notifications.module").then(
@@ -42,10 +43,9 @@ const routes: Routes = [
       {
         path: "log/:id",
         canActivate: [AuthGuard],
+        data: { roles: "admin" },
         loadChildren: () =>
-          import("../pages/notifications/notifications.module").then(
-            (m) => m.NotificationsPageModule
-          ),
+          import("../pages/log/log.module").then((m) => m.LogPageModule),
       },
       {
         path: "",

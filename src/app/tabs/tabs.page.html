@@ -30,6 +30,7 @@
                 [routerLink]="['/notifications']"
                 class="notif-button mr-2"
                 ion-button
+                *ngIf="user?.is_admin == 1"
               >
                 <ion-icon color="white" name="notifications-outline"></ion-icon>
                 <ion-badge color="primary" class="notif-number"

@@ -16,5 +16,7 @@ export class LogService {
     }
     return this._HttpClient.get(`${environment.api}/api/log${pageParameter}`);
   }
-  
+  public getOneLog(id): Observable<any> {
+    return this._HttpClient.get(`${environment.api}/api/log/${id}`);
+  }
 }

@@ -1,0 +1,50 @@
+.log-page {
+  padding: 100px 0 10px;
+  .window-title {
+    font-weight: 700;
+
+    width: 85%;
+    margin: auto;
+    margin-bottom: 20px;
+    font-size: 26px;
+    color: #6b7994;
+  }
+  background-color: #f5f6f8;
+
+  width: 100%;
+  padding: 100px 0;
+
+  ion-card {
+    box-shadow: #cdcfd2 25px 25px 47px -7px;
+    border-radius: 15px;
+    padding: 20px 10px;
+    background-color: #ebedf0;
+    width: 80%;
+    margin: auto;
+    .date {
+      font-size: 12px;
+    }
+    ion-card-header {
+      padding-bottom: 0;
+    }
+    ion-card-title {
+      color: #de3577;
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+    span {
+      color: #6b7994;
+      font-weight: 600;
+    }
+    ion-card-subtitle {
+      color: #6b7994;
+      margin: 0;
+    }
+    .control-type {
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 10px;
+    }
+  }
+}
