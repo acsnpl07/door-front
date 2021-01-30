@@ -89,7 +89,7 @@ export class AdminDashboardPage implements OnInit {
   save(form: NgForm) {
     this._LoginService.addUser(this.user).subscribe(
       (res) => {
-        console.log(res);
+        form.reset();
         this.presentAlert("User Added", "Success");
         this.getUsers();
       },

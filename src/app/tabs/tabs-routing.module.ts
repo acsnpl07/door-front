@@ -48,6 +48,13 @@ const routes: Routes = [
           import("../pages/log/log.module").then((m) => m.LogPageModule),
       },
       {
+        path: "live-view",
+        loadChildren: () =>
+          import("../pages/live-view/live-view.module").then(
+            (m) => m.LiveViewPageModule
+          ),
+      },
+      {
         path: "",
         canActivate: [AuthGuard],
         redirectTo: "/home",

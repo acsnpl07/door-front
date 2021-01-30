@@ -1,0 +1,30 @@
+.live-view {
+  padding: 100px 0 10px;
+  height: 100%;
+  width: 100%;
+  .image-replace {
+    height: 200px;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .window-title {
+    font-weight: 700;
+
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 26px;
+    color: #6b7994;
+  }
+  background-color: #f5f6f8;
+
+  ion-card {
+    box-shadow: #cdcfd2 25px 25px 47px -7px;
+    border-radius: 15px;
+    padding: 20px 10px;
+    background-color: #ebedf0;
+    width: 80%;
+    margin: auto;
+  }
+}

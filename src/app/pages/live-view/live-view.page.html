@@ -1,0 +1,21 @@
+<ion-content>
+  <div class="live-view">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" class="mt-5">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <h2 class="window-title text-center">Live view</h2>
+    <ion-card>
+      <ion-card-content>
+        <img
+          class="image w-100"
+          *ngIf="livePhoto"
+          [src]="livePhoto"
+          (onerror)="livePhoto=null"
+        />
+        <div class="image-replace w-100" *ngIf="!livePhoto">
+          <p class="m-0">Failed to view Photo</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

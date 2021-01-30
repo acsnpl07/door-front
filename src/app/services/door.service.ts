@@ -12,4 +12,7 @@ export class DoorService {
   public openDoor(): Observable<any> {
     return this._HttpClient.get(`${environment.api}/api/door/open`);
   }
+  public getLiveView(): Observable<any> {
+    return this._HttpClient.get(`${environment.api}/api/video/image`);
+  }
 }
