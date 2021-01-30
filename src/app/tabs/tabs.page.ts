@@ -17,11 +17,11 @@ export class TabsPage {
     private _NotificationService: NotificationService
   ) {
     this.getUser();
-    this.getNotificationsNumber();
   }
   getUser() {
     this._LoginService.currentUser?.subscribe((user) => {
       this.user = user;
+      this.getNotificationsNumber();
     });
   }
   getNotificationsNumber() {

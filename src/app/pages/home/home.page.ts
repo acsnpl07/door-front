@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { LogService } from "src/app/services/log.service";
 import { LoadingController, AlertController } from "@ionic/angular";
 import { DoorService } from "src/app/services/door.service";
+import { LoginService } from "src/app/services/login.service";
 
 @Component({
   selector: "app-home",
@@ -13,6 +14,7 @@ export class HomePage {
   constructor(
     private _LogService: LogService,
     private _DoorService: DoorService,
+    private _LoginService: LoginService,
     public loadingController: LoadingController,
     public alertController: AlertController
   ) {
@@ -22,6 +24,7 @@ export class HomePage {
     this.getLogs(p);
   }
   doRefresh(event) {
+    this._LoginService.changeUser(this._LoginService.currentUserObject);
     this._LogService.getLog().subscribe((logs) => {
       this.logs = logs;
       event.target.complete();

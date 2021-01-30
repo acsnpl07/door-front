@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { NotificationService } from "src/app/services/notification.service";
 import { AlertController } from "@ionic/angular";
 import { IonInfiniteScroll } from "@ionic/angular";
+import { LoginService } from "src/app/services/login.service";
 
 @Component({
   selector: "app-notifications",
@@ -13,7 +14,8 @@ export class NotificationsPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   constructor(
     private _NotificationService: NotificationService,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private _LoginService: LoginService
   ) {
     this.getNotifications();
   }
@@ -63,6 +65,7 @@ export class NotificationsPage implements OnInit {
       this._NotificationService
         .getNotifications(this.notifications.current_page + 1)
         .subscribe((res) => {
+          this._LoginService.changeUser(this._LoginService.currentUserObject);
           this.notifications = Object.assign({}, res.data, {
             data: [...this.notifications.data, ...res.data.data],
           });
