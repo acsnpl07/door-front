@@ -32,6 +32,22 @@ const routes: Routes = [
           ),
       },
       {
+        path: "notifications",
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import("../pages/notifications/notifications.module").then(
+            (m) => m.NotificationsPageModule
+          ),
+      },
+      {
+        path: "log/:id",
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import("../pages/notifications/notifications.module").then(
+            (m) => m.NotificationsPageModule
+          ),
+      },
+      {
         path: "",
         canActivate: [AuthGuard],
         redirectTo: "/home",

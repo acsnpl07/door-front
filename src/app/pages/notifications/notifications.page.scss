@@ -1,0 +1,16 @@
+.notifications {
+  padding: 100px 0 10px;
+  .window-title {
+    font-weight: 700;
+    font-size: 22px;
+    color: #6b7994;
+    margin-top: 10px;
+  }
+  .title-link {
+    color: var(--primary);
+    cursor: pointer;
+  }
+  .notifications-container {
+    margin: 0 10px 20px 10px;
+  }
+}

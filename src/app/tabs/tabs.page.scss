@@ -26,7 +26,29 @@
     color: #6b7994;
     margin-top: 10px;
   }
-  ion-button {
+
+  ion-buttons {
+    overflow: visible;
+  }
+  .notif-button {
+    position: relative;
+    overflow: visible;
+    outline: 0;
+    .notif-number {
+      position: absolute;
+      top: -7px;
+      right: -5px;
+      border-radius: 4px;
+      font-size: 0.6em;
+      z-index: 6000;
+      padding: 3px;
+    }
+  }
+  ion-icon {
+    font-size: 20px;
+  }
+  ion-button,
+  button {
     border: 1px solid #ebedf0;
     border-radius: 20px;
     background-color: #ebedf0;

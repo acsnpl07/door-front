@@ -6,11 +6,14 @@ import { AuthGuard } from "./_guard/index";
 const routes: Routes = [
   {
     path: "",
-
     loadChildren: () =>
       import("./tabs/tabs.module").then((m) => m.TabsPageModule),
   },
   { path: "login", component: LoginComponent },
+  {
+    path: 'log',
+    loadChildren: () => import('./pages/log/log.module').then( m => m.LogPageModule)
+  },
 ];
 @NgModule({
   imports: [

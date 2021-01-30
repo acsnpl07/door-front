@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { LoginService } from "../services/login.service";
+import { NotificationService } from "../services/notification.service";
 
 @Component({
   selector: "app-tabs",
@@ -9,9 +10,23 @@ import { LoginService } from "../services/login.service";
 })
 export class TabsPage {
   user: any = null;
-  constructor(public router: Router, private _LoginService: LoginService) {
-    this._LoginService.currentUser.subscribe((user) => {
+  notificationsNumber: any = null;
+  constructor(
+    public router: Router,
+    private _LoginService: LoginService,
+    private _NotificationService: NotificationService
+  ) {
+    this.getUser();
+    this.getNotificationsNumber();
+  }
+  getUser() {
+    this._LoginService.currentUser?.subscribe((user) => {
       this.user = user;
+    });
+  }
+  getNotificationsNumber() {
+    this._NotificationService.getNotificationsCount().subscribe((res) => {
+      this.notificationsNumber = res.notification_count;
     });
   }
   logout() {

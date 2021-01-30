@@ -25,8 +25,18 @@
           class="p-0 d-flex align-items-center justify-content-end"
         >
           <div class="logout d-flex justify-content-between flex-row">
-            <ion-buttons
-              ><ion-button (click)="logout()">
+            <ion-buttons>
+              <button
+                [routerLink]="['/notifications']"
+                class="notif-button mr-2"
+                ion-button
+              >
+                <ion-icon color="white" name="notifications-outline"></ion-icon>
+                <ion-badge color="primary" class="notif-number"
+                  >{{notificationsNumber || 0}}</ion-badge
+                >
+              </button>
+              <ion-button (click)="logout()">
                 <ion-icon
                   color="white"
                   name="log-out-outline"

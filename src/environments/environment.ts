@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api: "http://3.95.67.173",
+  api: "http://13.59.233.43",
   accessKeyId: "AKIAWVYAJRLLUEIVMUGO",
   secretAccessKey: "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",
   region: "us-east-1",
