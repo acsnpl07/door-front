@@ -13,7 +13,7 @@ export class VideoService {
     options: {},
   };
   constructor(private socket: Socket, private _HttpClient: HttpClient) {
-    //this.socket.disconnect();
+    this.socket.disconnect();
     this.socket.on("connect", () => {
       this.socket.emit("ClientRequest", { request: "request from client" });
     });

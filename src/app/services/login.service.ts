@@ -13,8 +13,8 @@ import { NativeStorage } from "@ionic-native/native-storage/ngx";
 })
 export class LoginService {
   redirectUrl = "/";
-  private userSource: BehaviorSubject<any>;
-  public currentUser: Observable<any>;
+  private userSource: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  public currentUser: Observable<any> = this.userSource.asObservable();
 
   public get currentUserObject(): any {
     if (this.userSource) return this.userSource.value;
@@ -26,16 +26,12 @@ export class LoginService {
     private router: Router,
     private nativeStorage: NativeStorage
   ) {
-    this.userSource = new BehaviorSubject<any>({});
     this.nativeStorage
       .getItem("currentUser")
       .then((data) => {
-        this.userSource = new BehaviorSubject<any>(JSON.parse(data));
-        this.currentUser = this.userSource.asObservable();
+        this.userSource.next(JSON.parse(data));
       })
-      .catch((err) => {
-        this.currentUser = this.userSource.asObservable();
-      });
+      .catch((err) => {});
 
     this.nativeStorage.getItem("Token").then(
       (data) => {},
