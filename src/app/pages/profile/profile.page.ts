@@ -86,7 +86,6 @@ export class ProfilePage {
         this.getUser();
       },
       (err) => {
-        console.log(err);
         this.presentAlert(
           `${err.error.message} Please fill out [Name,Email,Password]`,
           "Failed"

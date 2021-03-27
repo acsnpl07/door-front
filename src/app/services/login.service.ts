@@ -162,7 +162,6 @@ export class LoginService {
       bucket.upload(params, function (err, data) {
         if (err) {
           alert(err);
-          console.log("There was an error uploading your file: ", err);
           reject(err);
         } else resolve(data.Location);
       });

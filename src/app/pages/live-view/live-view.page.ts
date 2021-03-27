@@ -21,11 +21,9 @@ export class LiveViewPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.videoService.getUrl().subscribe((res: any) => {
-      this.videoService
-        .getMessage(`https://${"24.162.48.7"}:${"22000"}/`)
-        .subscribe((res) => {
-          console.log(res);
-        });
+      this.videoService.getMessage(`${res.ip}:${res.port}`).subscribe((res) => {
+        this.livePhoto = "data:image/png;base64," + res.ServerMsg;
+      });
     });
   }
   getLivePhoto() {

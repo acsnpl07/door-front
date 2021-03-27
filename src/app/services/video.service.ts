@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { map } from "rxjs/operators";
+import { delay, map } from "rxjs/operators";
 import { Socket, SocketIoConfig } from "ngx-socket-io";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
@@ -10,25 +10,25 @@ import { environment } from "src/environments/environment";
 export class VideoService {
   config: SocketIoConfig = {
     url: "http://192.168.43.142:9780",
-    options: { transports: ["websocket", "polling"] },
+    options: {},
   };
   constructor(private socket: Socket, private _HttpClient: HttpClient) {
     //this.socket.disconnect();
-    this.socket.on("connection", () => {
-      console.log("connected");
+    this.socket.on("connect", () => {
+      this.socket.emit("ClientRequest", { request: "request from client" });
     });
   }
   changeSocket(url: string) {
-    // this.socket.disconnect();
-    // this.config.url = url;
-    // this.socket = new Socket(this.config);
+    this.socket.disconnect();
+    this.config.url = url;
+    this.socket = new Socket(this.config);
   }
   getMessage(url: string) {
     this.changeSocket(url);
-    console.log("getting messages");
-    return this.socket.fromEvent("ServerPhoto").pipe(
+    return this.socket.fromEvent("ServerMsg").pipe(
+      delay(1000),
       map((data: any) => {
-        console.log(data);
+        this.socket.emit("ClientRequest", { request: "request from client" });
         return data;
       })
     );
