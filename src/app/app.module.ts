@@ -21,8 +21,7 @@ import { LoginComponent } from "./pages/login/login.component";
 import { NgxPaginationModule } from "ngx-pagination";
 import { SocketIoModule, SocketIoConfig } from "ngx-socket-io";
 const config: SocketIoConfig = {
-  url: "http://24.162.48.7:22000",
-
+  url: "",
   options: {},
 };
 

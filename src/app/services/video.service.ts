@@ -9,7 +9,7 @@ import { environment } from "src/environments/environment";
 })
 export class VideoService {
   config: SocketIoConfig = {
-    url: "http://192.168.43.142:9780",
+    url: "",
     options: {},
   };
   constructor(private socket: Socket, private _HttpClient: HttpClient) {
