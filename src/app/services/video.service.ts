@@ -13,7 +13,7 @@ export class VideoService {
     options: {},
   };
   constructor(private socket: Socket, private _HttpClient: HttpClient) {
-    this.socket.disconnect();
+    //this.socket.disconnect();
     this.socket.on("connect", () => {
       this.socket.emit("ClientRequest", { request: "request from client" });
     });
@@ -25,6 +25,7 @@ export class VideoService {
   }
   getMessage(url: string) {
     this.changeSocket(url);
+    this.socket.emit("ClientRequest", { request: "request from client" });
     return this.socket.fromEvent("ServerMsg").pipe(
       delay(1000),
       map((data: any) => {
