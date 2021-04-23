@@ -27,7 +27,7 @@ export class VideoService {
     this.changeSocket(url);
     this.socket.emit("ClientRequest", { request: "request from client" });
     return this.socket.fromEvent("ServerMsg").pipe(
-      delay(1000),
+      delay(100),
       map((data: any) => {
         this.socket.emit("ClientRequest", { request: "request from client" });
         return data;
